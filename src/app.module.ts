@@ -11,6 +11,10 @@ import {Web3Service} from './web3/web3.service';
 import {Web3Module} from './web3/web3.module';
 import configuration from "./config/configuration";
 import {Web3jsModule} from "nestjs-web3js/src/web3js/web3js.module";
+import {UserController} from './user/user.controller';
+
+import {UserModule} from './user/user.module';
+import {JwtModule, JwtService} from "@nestjs/jwt";
 
 @Module({
     imports: [
@@ -28,10 +32,12 @@ import {Web3jsModule} from "nestjs-web3js/src/web3js/web3js.module";
             })
         }),
         TelegramModule,
+        JwtModule,
         AuthModule,
-        Web3Module,],
-    controllers: [AppController],
-    providers: [AppService, TelegramService, Web3Service],
+        Web3Module,
+        UserModule],
+    controllers: [AppController, UserController],
+    providers: [AppService, TelegramService, Web3Service, JwtService],
 })
 export class AppModule {
 }
