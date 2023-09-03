@@ -1,4 +1,5 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Maps} from "../maps/maps.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -20,6 +21,10 @@ export class User extends BaseEntity {
     @Column({nullable: true})
     address: string;
 
-    @Column({nullable: true, default: 0})
+    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
     balance: number;
+
+    @ManyToMany(() => Maps, {eager: true})
+    @JoinTable()
+    maps: Maps[]
 }

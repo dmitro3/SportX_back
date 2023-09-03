@@ -36,6 +36,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
             email: profile.email
         } as User)
 
+
         return done(null, user);
     }
 }

@@ -11,7 +11,7 @@ import {AuthService} from '../auth.service';
                 return {
                     secret: 'secret',
                     signOptions: {
-                        expiresIn: '30s',
+                        expiresIn: '1d',
                     },
                 };
             },

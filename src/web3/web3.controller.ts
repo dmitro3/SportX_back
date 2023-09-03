@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Res} from '@nestjs/common';
 import {Web3Service} from "./web3.service";
 
 @Controller('web3')
@@ -17,5 +17,12 @@ export class Web3Controller {
     @Get("/blockNumber")
     async getBlockNumber() {
         return this.web3Service.getBlockNumber();
+    }
+
+    @Get("/abi")
+    async abi(@Res() res) {
+        return res.status(200).send({
+            abi: this.web3Service.getAbi()
+        })
     }
 }

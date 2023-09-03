@@ -1,4 +1,4 @@
-import {Controller, Get, Req, Res, UseGuards} from '@nestjs/common';
+import {Controller, Get, Query, Req, Res, UseGuards} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {DiscordGuard} from "./discord.guard";
 import {JwtAuthService} from "../jwt/jwt.services";
@@ -14,6 +14,7 @@ export class DiscordController {
     @Get()
     @UseGuards(DiscordGuard)
     async discordLogin(@Req() _req, @Res() res: Response) {
+        console.log(_req.user);
         return "Hello"
     }
 
@@ -22,14 +23,15 @@ export class DiscordController {
     async callback(
         @Res() res: Response,
         @Req() req: Request,
+        @Query('redirect_url') redirect_url: string
     ) {
-        console.log(req.user);
+        console.log(redirect_url);
 
         const {access_token} = await this.jwtAuthService.login(req.user as User);
         return res.cookie('access_token', access_token, {
             httpOnly: true,
             secure: false,
             sameSite: 'lax',
-        }).redirect("/")
+        }).status(200).json({success: true}).redirect(redirect_url)
     }
 }
